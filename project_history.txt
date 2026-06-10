@@ -1,0 +1,56 @@
+  173  nmcli connection show
+  174  sudo nmcli connection clone lo mephi-network
+  175  sudo nmcli connection up mephi-network
+  176  sudo nmcli connection modify mephi-network ipv4.addresses 192.168.1.100/24
+  177  sudo nmcli connection modify mephi-network ipv4.gateway 192.168.1.1
+  178  sudo nmcli connection modify mephi-network ipv4.dns 8.8.8.8
+  179  sudo nmcli connection modify mephi-network ipv4.method manual
+  180  sudo nmcli connection down mephi-network
+  181  sudo nmcli connection up mephi-network
+  182  sudo hostnamectl set-hostname mephi-2026.domain.local
+  183  hostnamectl
+  184  sudo nano /etc/hosts
+  185  ip route show default
+  186  ping -c 4 8.8.8.8 > /tmp/network_check.txt
+  187  ping -c 4 192.168.1.1 >> /tmp/network_check.txt
+  188  sudo dnf install nginx tcpdump libcap-ng-utils
+  189  sudo dnf download tcpdump --destdir /tmp
+  190  sudo rpm -ivh /tmp/tcpdump-4.99.6-2.fc43.x86_64.rpm
+  191  sudo rpm -Uvh /tmp/tcpdump-4.99.6-2.fc43.x86_64.rpm
+  192  lsblk
+  193  sudo fdisk /dev/nvme0n1p12
+  194  sudo mkfs.ext4 -L MEPHI_DATA /dev/nvme0n1p12
+  195  sudo mkdir -p /data/mephi-web
+  196  sudo nano /etc/fstab
+  197  sudo mount -a
+  198  df -h /data/mephi-web/
+  199  sudo systemctl start nginx
+  200  sudo systemctl enable nginx
+  201  sudo journalctl -u nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+  202  sudo useradd -m mephi-admin
+  203  sudo groupadd mephi-devs
+  204  sudo usermod -aG mephi-devs mephi-admin
+  205  sudo passwd mephi-admin
+  206  sudo chown -R mephi-admin:mephi-devs /data/mephi-web
+  207  sudo chmod 2775 /data/mephi-web
+  208  getenforce
+  209  sudo semanage fcontext -a -t httpd_sys_content_t "/data/mephi-web(/.*)?"
+  210  sudo restorecon -Rv /data/mephi-web/
+  211  sudo chmod u-s /usr/sbin/tcpdump
+  212  sudo setcap cap_net_raw,cap_net_admin+ep /usr/sbin/tcpdump
+  213  getcap /usr/sbin/tcpdump
+  214  sudo -u mephi-admin tcpdump --help
+  215  sudo bash -c 'echo "root" > /etc/ssh/denied_users'
+  216  sudo nano /etc/pam.d/login
+  217  sudo nano /etc/pam.d/sshd
+  218  sudo systemctl restart sshd
+  219  sudo nano /etc/nginx/nginx.conf
+  220  sudo nginx -t
+  221  sudo systemctl restart nginx
+  222  history >> ~/project_history.txt
+From "mephi-admin":
+    1  echo "Hello from Student: M2551004" > /data/mephi-web/index.html
+    2  ls -Z /data/mephi-web/index.html
+    3  curl http://localhost
+    4  curl http://192.168.1.100
+    5  history >> ~/project_history.txt

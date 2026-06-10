@@ -1,0 +1,15 @@
+Filesystem mount check output:
+
+~$ df -h /data/mephi-web/
+Filesystem       Size  Used Avail Use% Mounted on
+/dev/nvme0n1p12  4.9G  1.3M  4.6G   1% /data/mephi-web
+
+
+
+Tcpdump check output:
+
+~$ sudo rpm -ivh /tmp/tcpdump-4.99.6-2.fc43.x86_64.rpm
+Verifying...                          ################################# [100%]
+Preparing...                          ################################# [100%]
+	package tcpdump-14:4.99.6-2.fc43.x86_64 is already installed
+
